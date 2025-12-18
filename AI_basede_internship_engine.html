@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Internship Recommendation | PM Internship Scheme</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ---------------- GLOBAL ---------------- */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background: linear-gradient(-45deg,#0f4c75,#3282b8,#1b6ca8,#0f4c75);
+    background-size: 400% 400%;
+    animation: bgMove 12s ease infinite;
+    color:#fff;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+/* ---------------- HEADER ---------------- */
+header{
+    text-align:center;
+    padding:40px 20px;
+}
+
+header h1{
+    font-size:32px;
+    font-weight:700;
+}
+
+header p{
+    opacity:0.9;
+}
+
+/* ---------------- LAYOUT ---------------- */
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.section{
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    border-radius:16px;
+    padding:25px;
+    margin-bottom:30px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.3);
+    animation: fadeUp 0.8s ease;
+}
+
+@keyframes fadeUp{
+    from{opacity:0; transform:translateY(20px)}
+    to{opacity:1; transform:translateY(0)}
+}
+
+h2{
+    margin-bottom:20px;
+    border-left:6px solid #fff;
+    padding-left:10px;
+}
+
+/* ---------------- FORM ---------------- */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:15px;
+}
+
+label{
+    font-size:14px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    margin-top:6px;
+    outline:none;
+}
+
+textarea{resize:none}
+
+button{
+    margin-top:20px;
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:30px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    background: linear-gradient(135deg,#00c6ff,#0072ff);
+    color:white;
+    transition:0.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+button:hover{
+    transform:scale(1.03);
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* ---------------- CARDS ---------------- */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.card{
+    background: rgba(255,255,255,0.18);
+    border-radius:16px;
+    padding:20px;
+    position:relative;
+    animation: zoomIn 0.6s ease;
+}
+
+@keyframes zoomIn{
+    from{transform:scale(0.9);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+
+.match{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:#00ffcc;
+    color:#000;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.tag{
+    display:inline-block;
+    margin:5px 5px 0 0;
+    padding:5px 12px;
+    background:#fff;
+    color:#000;
+    border-radius:20px;
+    font-size:12px;
+}
+
+/* ---------------- AI BUTTON ---------------- */
+.ai-btn{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    padding:16px 22px;
+    border-radius:50px;
+    background:linear-gradient(135deg,#ff512f,#dd2476);
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    animation:pulse 2s infinite;
+    z-index:1000;
+}
+
+@keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(255,81,47,0.6)}
+    70%{box-shadow:0 0 0 18px rgba(255,81,47,0)}
+    100%{box-shadow:0 0 0 0 rgba(255,81,47,0)}
+}
+
+/* ---------------- AI CHAT ---------------- */
+.ai-chat{
+    position:fixed;
+    bottom:100px;
+    right:25px;
+    width:320px;
+    background:#fff;
+    color:#000;
+    border-radius:16px;
+    display:none;
+    flex-direction:column;
+    overflow:hidden;
+    box-shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+
+.ai-header{
+    background:#0072ff;
+    color:white;
+    padding:12px;
+    text-align:center;
+    font-weight:600;
+}
+
+.ai-body{
+    padding:10px;
+    height:230px;
+    overflow-y:auto;
+    font-size:14px;
+}
+
+.ai-msg{
+    background:#f1f1f1;
+    padding:8px;
+    border-radius:8px;
+    margin-bottom:8px;
+    animation:fadeUp 0.4s;
+}
+
+.ai-input{
+    display:flex;
+    border-top:1px solid #ccc;
+}
+
+.ai-input input{
+    flex:1;
+    border:none;
+}
+
+.ai-input button{
+    width:80px;
+    border-radius:0;
+}
+
+/* ---------------- FOOTER ---------------- */
+footer{
+    text-align:center;
+    padding:15px;
+    opacity:0.8;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>AI-Based Internship Recommendation Engine</h1>
+<p>PM Internship Scheme – Intelligent Career Matching Platform</p>
+</header>
+
+<div class="container">
+
+<div class="section">
+<h2>Student Profile</h2>
+<div class="grid">
+<div>
+<label>Name</label>
+<input id="name">
+</div>
+<div>
+<label>Skills</label>
+<input id="skills" placeholder="Python, Java, ML">
+</div>
+<div>
+<label>Domain</label>
+<select id="domain">
+<option>Software Development</option>
+<option>AI & ML</option>
+<option>Data Science</option>
+</select>
+</div>
+<div>
+<label>Mode</label>
+<select id="location">
+<option>Remote</option>
+<option>On-Site</option>
+<option>Hybrid</option>
+</select>
+</div>
+</div>
+<button onclick="generate()">Generate AI Recommendations</button>
+</div>
+
+<div class="section">
+<h2>Recommended Internships</h2>
+<div id="results" class="cards">
+<p>AI will analyze your profile and suggest internships.</p>
+</div>
+</div>
+
+</div>
+
+<footer>© 2025 PM Internship Scheme</footer>
+
+<div class="ai-btn" onclick="toggleAI()">🤖 AI Support</div>
+
+<div class="ai-chat" id="chat">
+<div class="ai-header">AI Assistant</div>
+<div class="ai-body" id="chatBody">
+<div class="ai-msg">Hello! Ask me about internships or skills.</div>
+</div>
+<div class="ai-input">
+<input id="chatInput" placeholder="Type here...">
+<button onclick="sendAI()">Send</button>
+</div>
+</div>
+
+<script>
+function generate(){
+    const res=document.getElementById("results");
+    res.innerHTML="<p>🔍 AI is analyzing your profile...</p>";
+
+    setTimeout(()=>{
+        res.innerHTML=`
+        <div class="card">
+            <div class="match">88% Match</div>
+            <h3>Software Developer Intern</h3>
+            <p><b>Company:</b> GovTech India</p>
+            <p><b>Stipend:</b> ₹8,000/month</p>
+            <span class="tag">Java</span>
+            <span class="tag">HTML</span>
+            <span class="tag">Problem Solving</span>
+        </div>`;
+    },1200);
+}
+
+function toggleAI(){
+    const c=document.getElementById("chat");
+    c.style.display=c.style.display==="flex"?"none":"flex";
+}
+
+function sendAI(){
+    const input=document.getElementById("chatInput");
+    const body=document.getElementById("chatBody");
+    if(!input.value.trim())return;
+
+    body.innerHTML+=<div class="ai-msg"><b>You:</b> ${input.value}</div>;
+
+    setTimeout(()=>{
+        body.innerHTML+=<div class="ai-msg"><b>AI:</b> Focus on Python projects and internships aligned with your domain.</div>;
+        body.scrollTop=body.scrollHeight;
+    },600);
+
+    input.value="";
+}
+</script>
+
+</body>
+</html>
